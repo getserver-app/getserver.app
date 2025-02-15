@@ -1,0 +1,13 @@
+<h1>Enter your email address:</h1>
+<p>
+    If you have an account, you will be taken to your VPS's, otherwise you'll be prompted to rent a VPS
+</p>
+<form id="hero-form">
+    <input name="email" type="text" pattern="[a-z0-9._%-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+    <button>
+        Do the thing!
+    </button>
+</form>
+<script>
+ document.querySelector('#hero-form').addEventListener('submit', e => e.preventDefault());
+</script>
