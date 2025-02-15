@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+# Load .env file on startup
+gem "dotenv", groups: [ :development, :test ]
 # Vultr api client
 gem "vultr", github: "excid3/vultr.rb"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -13,7 +15,7 @@ gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 # Stripe payment engine for rails
-gem "stripe-rails"
+gem "stripe"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
