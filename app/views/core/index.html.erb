@@ -20,9 +20,28 @@
     }
  }, true);
  const error = document.querySelector('#error')
- const showError = (msg) => {
- }
  const button = document.querySelector('#enter-button')
+ document.querySelector('#email-input').addEventListener('input', e => {
+    button.style.display = 'none'
+    error.innerText = ''
+    fetch("/api/check_email", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: e.target.value })
+    })
+    .then(async response => {
+        if (response.status == 400) {
+            error.innerText = 'Please enter a valid email address.'
+            return
+        }
+
+        button.style.display = 'block'
+        const message = await response.json()
+        button.innerText = message['button_txt']
+    })
+ })
  document.querySelector('#email-input').addEventListener('change', e => {
     button.style.display = 'none'
     error.innerText = ''
