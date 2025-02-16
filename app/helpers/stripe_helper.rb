@@ -1,13 +1,13 @@
 module StripeHelper
-  def session_stripe_session
-    if session[:stripe_session].nil?
+  def session_stripe_checkout
+    if session[:stripe_checkout].nil?
       return nil
     end
 
     begin
-      Stripe::Checkout::Session.retrieve(session[:stripe_session])
+      Stripe::Checkout::Session.retrieve(session[:stripe_checkout])
     rescue
-      session.delete(:stripe_session)
+      session.delete(:stripe_checkout)
       nil
     end
   end
@@ -16,7 +16,6 @@ module StripeHelper
     if @stripe_product.nil?
       return @stripe_product = Stripe::Product.retrieve(Rails.configuration.stripe[:product_id])
     end
-
     @stripe_product
   end
 

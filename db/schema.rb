@@ -10,18 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_15_233033) do
-  create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "stripe_id", limit: 50
+ActiveRecord::Schema[8.0].define(version: 2025_02_16_193733) do
+  create_table "emails", force: :cascade do |t|
+    t.string "email", limit: 320, null: false
+    t.string "responsibility", limit: 100, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_emails_on_email"
+  end
+
+  create_table "server_deletions", force: :cascade do |t|
+    t.string "server_id", null: false
+    t.datetime "delete_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "vps", force: :cascade do |t|
+  create_table "servers", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "internal_id", null: false
     t.string "provider_identifier", null: false
-    t.integer "price", null: false
-    t.boolean "active", default: false
+    t.string "provider_plan_identifier", null: false
+    t.string "provider_os_identifier", null: false
+    t.string "provider_region_identifier", null: false
+    t.boolean "active", default: true
+    t.string "stripe_subscription_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["internal_id"], name: "index_servers_on_internal_id"
+    t.index ["user_id"], name: "index_servers_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "stripe_id", limit: 50, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

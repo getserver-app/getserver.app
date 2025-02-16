@@ -1,0 +1,47 @@
+<% if session_user.nil? %>
+<h1>Enter your email address:</h1>
+<p>
+    If you have an account, you will be taken to your VPS's, otherwise you'll be prompted to rent a VPS
+</p>
+<form action="/enter" id="hero-form">
+    <input id="email-input" name="email" type="text">
+    <span id="error" style="color: red"></span>
+    <button id="enter-button" style="display: none">
+        Do the thing!
+    </button>
+</form>
+<script>
+ const error = document.querySelector('#error')
+ const showError = (msg) => {
+ }
+ const button = document.querySelector('#enter-button')
+ document.querySelector('#email-input').addEventListener('change', e => {
+    button.style.display = 'none'
+    error.innerText = ''
+    fetch("/api/check_email", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: e.target.value })
+    })
+    .then(async response => {
+        if (response.status == 400) {
+            error.innerText = 'Please enter a valid email address.'
+            return
+        }
+
+        button.style.display = 'block'
+        const message = await response.json()
+        button.innerText = message['button_txt']
+    })
+ })
+</script>
+<% else %>
+<p>
+    You have a pending email to verify. Please check your email, this can take up to a few minutes.
+</p>
+<p>
+    <a href="/enter/?email=<%= session_user.email %>">Click here to resend your email</a> your verification email.
+</p>
+<% end %>

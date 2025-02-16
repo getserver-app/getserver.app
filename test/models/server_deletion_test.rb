@@ -1,6 +1,6 @@
 require "test_helper"
 
-class VpTest < ActiveSupport::TestCase
+class ServerDeletionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

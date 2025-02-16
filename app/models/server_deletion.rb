@@ -1,0 +1,2 @@
+class ServerDeletion < ApplicationRecord
+end

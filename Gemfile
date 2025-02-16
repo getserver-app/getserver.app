@@ -1,5 +1,10 @@
 source "https://rubygems.org"
 
+# Static type analysis tools for ruby
+gem "sorbet", group: :development
+gem "sorbet-runtime"
+gem "tapioca", require: false, group: [ :development, :test ]
+
 # Load .env file on startup
 gem "dotenv", groups: [ :development, :test ]
 # Vultr api client
