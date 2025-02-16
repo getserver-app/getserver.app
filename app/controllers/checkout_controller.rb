@@ -26,7 +26,7 @@ class CheckoutController < ApplicationController
       redirect_to "/"
     end
 
-    if stripe_session.status != 'paid'
+    if stripe_session.status != "paid"
       session.delete(:stripe_session)
       return redirect_to "/"
     end
