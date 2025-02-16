@@ -3,6 +3,11 @@ module UserHelper
     if session[:user_id].nil?
       return nil
     end
-    User.find(session[:user_id])
+    begin
+      User.find(session[:user_id])
+    rescue ActiveRecord::RecordNotFound
+      session.delete(:user_id)
+      nil
+    end
   end
 end

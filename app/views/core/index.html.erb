@@ -1,7 +1,7 @@
 <% if session_user.nil? %>
 <h1>Enter your email address:</h1>
 <p>
-    If you have an account, you will be taken to your VPS's, otherwise you'll be prompted to rent a VPS
+    Enter your email to rent a VPS, or to manage your existing VPS's
 </p>
 <form action="/enter" id="hero-form">
     <input id="email-input" name="email" type="text">
@@ -11,6 +11,14 @@
     </button>
 </form>
 <script>
+ window.addEventListener('keydown',function(e) {
+    if (e.keyIdentifier==='U+000A' || e.keyIdentifier==='Enter' || e.keyCode===13) {
+        if (e.target.nodeName==='INPUT' && e.target.type==='text') {
+            e.preventDefault();
+            return false;
+        }
+    }
+ }, true);
  const error = document.querySelector('#error')
  const showError = (msg) => {
  }
