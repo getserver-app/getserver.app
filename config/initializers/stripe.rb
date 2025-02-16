@@ -8,9 +8,9 @@ Stripe.api_key = Rails.configuration.stripe[:secret_key]
 product_id = Rails.configuration.stripe[:product_id] = "vps"
 
 begin
-  @product = Stripe::Product.retrieve({ id: product_id })
+  Stripe::Product.retrieve({ id: product_id })
 rescue Stripe::InvalidRequestError
-  @product = Stripe::Product.create(
+  Stripe::Product.create(
     id: product_id,
     name: "Virtual Private Server",
     description: "1 vCPU, 1 GB RAM, 25GB NVME Disk",
@@ -22,5 +22,3 @@ rescue Stripe::InvalidRequestError
     }
   )
 end
-
-Rails.configuration.stripe[:product] = @product

@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  post "api/check_email", to: "api#check_email"
+  get "/checkout", to: "checkout#checkout"
+
+  post "/api/check_email", to: "api#check_email"
 
   # Defines the root path route ("/")
-  root "application#index"
+  root "implementation#index"
 end
