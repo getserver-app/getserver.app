@@ -1,5 +1,4 @@
 class ApiController < ApplicationController
-
   skip_before_action :verify_authenticity_token
 
   def check_email
@@ -14,5 +13,4 @@ class ApiController < ApplicationController
 
     render json: { button_txt: "Go to dashboard" }, status: :ok
   end
-
 end
