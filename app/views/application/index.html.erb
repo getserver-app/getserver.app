@@ -9,5 +9,13 @@
     </button>
 </form>
 <script>
- document.querySelector('#hero-form').addEventListener('submit', e => e.preventDefault());
+ document.querySelector('#hero-form').addEventListener('submit', e => {
+    fetch("http://localhost:3000/api/check_email?email=test@gmail.com", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    e.preventDefault()
+ });
 </script>
