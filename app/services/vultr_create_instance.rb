@@ -1,4 +1,4 @@
-class Service::VultrCreateInstance < Service::BaseAction
+class Service::VultrCreateInstance < Service::BaseService
   def execute
     region_id = get_provider_region_id
     os_id = get_provier_os_id

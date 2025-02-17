@@ -1,5 +1,5 @@
-class SendGridAction
+class SendGridService
     def execute
-        return "Hello, World!"
+        return "Hell"
     end
 end

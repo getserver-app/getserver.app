@@ -1,5 +1,6 @@
 class CoreController < ApplicationController
   def index
+    @test = SendGridAction.new().execute
   end
 
   def enter
