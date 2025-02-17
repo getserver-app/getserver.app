@@ -1,5 +1,5 @@
-class SendGridService
+class SendgridService
     def execute
-        return "Hell"
+        
     end
 end
