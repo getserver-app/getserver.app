@@ -36,7 +36,7 @@ class CheckoutController < ApplicationController
     end
 
     server_id = stripe_session.metadata[:server_id]
-    Action::VultrCreateInstance.new(
+    VultrCreateInstance.new(
       user_id: session_user.id,
       stripe_id: stripe_session.subscription.id,
       server_id: server_id
