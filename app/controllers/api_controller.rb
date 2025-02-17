@@ -15,4 +15,9 @@ class ApiController < ApplicationController
 
     render json: { button_txt: "Go to dashboard" }, status: :ok
   end
+
+  def send_email
+  
+  end
+
 end

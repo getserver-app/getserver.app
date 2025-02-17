@@ -42,8 +42,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_16_193733) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", null: false
-    t.string "stripe_id", limit: 50, null: false
+    t.string "email"
+    t.string "stripe_id", limit: 50
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "vps", force: :cascade do |t|
+    t.string "provider_identifier", null: false
+    t.integer "price", null: false
+    t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
