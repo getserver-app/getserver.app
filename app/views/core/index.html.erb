@@ -1,9 +1,11 @@
 <% if session_user.nil? %>
 <%= @test %>
+<hgroup>
 <h1>Enter your email address:</h1>
 <p>
     Enter your email to rent a VPS, or to manage your existing VPS's
 </p>
+</hgroup>
 <form action="/enter" id="hero-form">
     <input id="email-input" name="email" type="text">
     <span id="error" style="color: red"></span>
