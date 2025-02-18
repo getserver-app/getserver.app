@@ -28,12 +28,12 @@ class CoreController < ApplicationController
     session[:verification_attempts] = verification_attempts
 
     # TODO: Send email verification
-    email_job = Email.create(
+    Email.create(
       responsibility: "verification",
       email: @email,
     )
 
-    SendEmailService.new().execute(to: @email, responsibility: "verification")
+    SendEmailService.new(to: @email, responsibility: "verification").execute()
 
     redirect_to "/"
   end
