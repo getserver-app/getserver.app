@@ -1,4 +1,4 @@
 class SendEmailService
-    def execute
+    def execute()
     end
 end

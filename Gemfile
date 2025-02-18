@@ -75,4 +75,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "sendgrid-ruby", "~> 6.7"
+gem "mailgun-ruby", "~> 1.2"
