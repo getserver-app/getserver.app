@@ -1,5 +1,5 @@
 module Email
-    class SendEmailService << BaseService
+    class SendService < BaseService
         def execute
             mg_client = Mailgun::Client.new(ENV["MAILGUN_API_KEY"])
 
@@ -12,7 +12,6 @@ module Email
                 }
                 mg_client.send_message(EMAIL_DOMAIN, messages_params)
             end
-
         end
     end
 end

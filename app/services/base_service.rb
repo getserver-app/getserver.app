@@ -1,4 +1,4 @@
-class Service::BaseService
+class BaseService
   def initialize(**params)
     params.each { |key, val| self.instance_variable_set("@#{key}".to_sym, val) }
   end
