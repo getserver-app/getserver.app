@@ -17,7 +17,5 @@ class ApiController < ApplicationController
   end
 
   def send_email
-  
   end
-
 end
