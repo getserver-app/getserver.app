@@ -23,7 +23,7 @@
 
   <body>
     <% flash.each do |type, msg| %>
-      <div>
+      <div class="alert-<%= type %>">
         <%= msg %>
       </div>
     <% end %>

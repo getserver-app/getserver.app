@@ -1,4 +1,11 @@
 class CoreController < ApplicationController
+  rate_limit to: 3,
+    within: 2.minute,
+    store: cache_store,
+    by: -> { request.domain },
+    with: -> { redirect_to "index", alert: "Too many verification attemps!, Please try again later." },
+    only: :enter
+
   def index
   end
 
@@ -27,13 +34,12 @@ class CoreController < ApplicationController
     session[:user_id] = @user.id
     session[:verification_attempts] = verification_attempts
 
-    # TODO: Send email verification
     Email.create(
       responsibility: "verification",
       email: @email,
     )
 
-    SendService.new(to: @email, responsibility: "verification").execute()
+    Mail::SendService.new(to: @email, responsibility: "verification").execute()
 
     redirect_to "/"
   end
