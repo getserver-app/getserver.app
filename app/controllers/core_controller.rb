@@ -39,7 +39,11 @@ class CoreController < ApplicationController
       email: @email,
     )
 
-    Mail::SendService.new(to: @email, responsibility: "verification").execute()
+    Mail::SendService.new(
+      to: @email,
+      responsibility: "verification",
+      body: "Imagine you see a verification link!"
+    ).execute
 
     redirect_to "/"
   end
