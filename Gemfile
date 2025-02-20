@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # Static pages simplified
 gem "high_voltage", "~> 4.0.0"
 # Load .env file on startup
-gem "dotenv", groups: [ :development, :test ]
+gem "dotenv"
 # Vultr api client
 gem "vultr", github: "excid3/vultr.rb"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
