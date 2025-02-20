@@ -34,15 +34,16 @@ class CoreController < ApplicationController
     session[:user_id] = @user.id
     session[:verification_attempts] = verification_attempts
 
-    Email.create(
+    @verification_email = Email.create(
       responsibility: "verification",
       email: @email,
     )
 
     @verification = Verification.create(
-      # could be done cleaner
+      # could be done cleaner?
       path: Random.new.rand(10000000..99999999),
-      email: @email
+      email_id: @verification_email.id,
+      user_id: @user.id
     )
 
     Mail::SendService.new(

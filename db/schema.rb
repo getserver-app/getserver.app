@@ -44,13 +44,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_021340) do
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "stripe_id", limit: 50, null: false
+    t.boolean "verified", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "verifications", force: :cascade do |t|
     t.integer "path"
-    t.string "email"
+    t.integer "email_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
