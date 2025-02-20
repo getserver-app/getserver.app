@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_16_193733) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_20_021340) do
   create_table "emails", force: :cascade do |t|
     t.string "email", limit: 320, null: false
     t.string "responsibility", limit: 100, null: false
@@ -44,6 +44,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_16_193733) do
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "stripe_id", limit: 50, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "verifications", force: :cascade do |t|
+    t.integer "path"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

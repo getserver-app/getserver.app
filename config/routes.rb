@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   post "/api/check_email", to: "api#check_email"
 
+  get "/verify", to: "verification#verify"
+
   get "/enter", to: "core#enter"
 
   # Defines the root path route ("/")

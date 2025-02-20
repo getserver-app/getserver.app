@@ -39,10 +39,16 @@ class CoreController < ApplicationController
       email: @email,
     )
 
+    @verification = Verification.create(
+      # could be done cleaner
+      path: Random.new.rand(10000000..99999999),
+      email: @email
+    )
+
     Mail::SendService.new(
       to: @email,
       responsibility: "verification",
-      body: "Imagine you see a verification link!"
+      body: @verification.path
     ).execute
 
     redirect_to "/"
