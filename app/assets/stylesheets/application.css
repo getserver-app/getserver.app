@@ -8,3 +8,40 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* This "@media" block defines rules that will only be applied when the minimum
+ * width of the screen is 55em or greater. In essence, they are settings that
+ * only apply on normal widescreens, but *not* phones and low res monitors.
+ * Since we have more room on widescreens, we change a couple things. */
+
+#enter-button {
+    margin-top: 12px;
+}
+
+main {
+    margin: auto;
+}
+
+footer {
+    text-align: center;
+}
+
+header > hr, footer > hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 55em) {
+    aside {
+        margin: 0 30px 0 30px;
+    }
+
+    header, footer {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    main {
+        max-width: 850px;
+    }
+}

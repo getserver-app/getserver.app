@@ -5,10 +5,12 @@
     Enter your email to rent a VPS, or to manage your existing VPS's
 </p>
 <form action="/enter" id="hero-form">
-    <input id="email-input" name="email" type="text">
-    <span id="error" style="color: red"></span>
-    <button id="enter-button" style="display: none">
-        Do the thing!
+    <div>
+        <input id="email-input" name="email" type="text">
+        <span id="error" style="color: red"></span>
+    </div>
+    <button disabled="true" id="enter-button">
+        Submit
     </button>
 </form>
 <script>
@@ -23,7 +25,7 @@
  const error = document.querySelector('#error')
  const button = document.querySelector('#enter-button')
  document.querySelector('#email-input').addEventListener('input', e => {
-    button.style.display = 'none'
+    button.disabled = true;
     error.innerText = ''
     fetch("/api/check_email", {
         method: "POST",
@@ -38,13 +40,13 @@
             return
         }
 
-        button.style.display = 'block'
+        button.disabled = false;
         const message = await response.json()
         button.innerText = message['button_txt']
     })
  })
  document.querySelector('#email-input').addEventListener('change', e => {
-    button.style.display = 'none'
+    button.disabled = true;
     error.innerText = ''
     fetch("/api/check_email", {
         method: "POST",
@@ -59,7 +61,7 @@
             return
         }
 
-        button.style.display = 'block'
+        button.disabled = false;
         const message = await response.json()
         button.innerText = message['button_txt']
     })

@@ -22,11 +22,25 @@
   </head>
 
   <body>
-    <% flash.each do |type, msg| %>
-      <div class="alert-<%= type %>">
-        <%= msg %>
+    <header>
+      GetServer.app 
+      <div class="flash-wrapper">
+        <% flash.each do |type, msg| %>
+          <div class="alert-<%= type %>">
+            <%= msg %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-    <%= yield %>
+      <hr>
+    </header> 
+    <article>
+      <main>
+        <%= yield %>
+      </main>
+    </article>
+    <footer>
+      <hr>
+      <a href="/tos">tos</a> | <a href="/privacy">privacy</a> | <a href="/about">about</a>
+    </footer>
   </body>
 </html>
