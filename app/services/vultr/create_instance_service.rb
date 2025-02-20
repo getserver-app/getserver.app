@@ -10,6 +10,7 @@ module Vultr
         plan: plan_id,
         label: @stripe_id + "-" + @server_id,
         os_id: os_id,
+        backups: "disabled",
         tags: [ "User #{@user_id}", "Server #{@server_id}", "Stripe #{@stripe_id}" ]
       })
     end

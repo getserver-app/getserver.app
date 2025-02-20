@@ -1,10 +1,5 @@
 source "https://rubygems.org"
 
-# Static type analysis tools for ruby
-gem "sorbet", group: :development
-gem "sorbet-runtime"
-gem "tapioca", require: false, group: [ :development, :test ]
-
 # Static pages simplified
 gem "high_voltage", "~> 4.0.0"
 # Load .env file on startup
