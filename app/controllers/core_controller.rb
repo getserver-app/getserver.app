@@ -45,8 +45,7 @@ class CoreController < ApplicationController
     )
 
     @verification = Verification.create(
-      # could be done cleaner?
-      path: Random.new.rand(10000000..99999999),
+      path: SecureRandom.uuid,
       email_id: @verification_email.id,
       user_id: @user.id
     )
@@ -54,7 +53,13 @@ class CoreController < ApplicationController
     Mail::SendService.new(
       to: @email,
       responsibility: "verification",
-      body: @verification.path
+      body: %Q(
+Please click the following link to #{@user.verified ? "login to" : "rent a vps from"} getserver.app:
+
+<a href="https://getserver.app/verify/#{@verification.path}">https://getserver.app/verify/#{@verification.path}</a>
+
+Do not share this link with anybody.
+      ).gsub(/\s+/, " ").strip
     ).execute
 
     redirect_to "/"
