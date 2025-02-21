@@ -1,3 +1,3 @@
 class DashboardController < ApplicationController
-  before_action :require_valid_user
+  before_action :require_verified_login_session
 end
