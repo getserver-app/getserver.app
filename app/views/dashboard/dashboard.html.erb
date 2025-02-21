@@ -1,0 +1,29 @@
+<form action="/dashboard/action">
+    <input type="submit" name="action" value="Restart">
+    <input type="submit" name="action" value="Stop">
+    <input type="submit" name="action" value="Delete">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Server Name</th>
+                <th>Ip Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @servers.each do |server| %>
+                <tr>
+                    <td>
+                        <input type="radio" name="server" value="<%= server.id %>">
+                    </td>
+                    <td>
+                        <%= server.name %>
+                    </td>
+                    <td>
+                        <%= server.ip %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</form>

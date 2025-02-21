@@ -12,5 +12,5 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  protected :require_valid_user
+  protected :require_verified_login_session
 end
