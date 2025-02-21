@@ -29,7 +29,7 @@ class CoreController < ApplicationController
 
     if @user.nil?
       customer = Stripe::Customer.create(email: @email)
-      @user = User.new(email: @email, stripe_id: customer.id)
+      @user = User.new(email: @email, stripe_id: customer.id, verified: false)
       @user.save
       flash.notice = "Thanks for signing up. Check your email in the next few minutes to get your VPS."
     else
