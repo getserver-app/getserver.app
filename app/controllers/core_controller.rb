@@ -12,6 +12,10 @@ class CoreController < ApplicationController
   def enter
     @email = params["email"]
 
+    if @email.nil?
+      return redirect_to "/"
+    end
+
     verification_attempts = Email.where(
       responsibility: "verification",
       email: @email, created_at: Time.parse("12am")..Time.parse("11:59pm")
@@ -25,7 +29,8 @@ class CoreController < ApplicationController
 
     if @user.nil?
       customer = Stripe::Customer.create(email: @email)
-      @user = User.create(email: @email, stripe_id: customer.id)
+      @user = User.new(email: @email, stripe_id: customer.id)
+      @user.save
       flash.notice = "Thanks for signing up. Check your email in the next few minutes to get your VPS."
     else
       flash.notice = "Check your email in the next few minutes to finish logging in."
