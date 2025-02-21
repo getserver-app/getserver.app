@@ -18,7 +18,7 @@ class CheckoutController < ApplicationController
   end
 
   def cancel
-    session.delete(:stripe_session)
+    session.clear
     redirect_to "/"
   end
 
