@@ -51,8 +51,14 @@ class CheckoutController < ApplicationController
       stripe_subscription_id: @stripe_id
     })
 
-    flash.notice = "Thank you! Your server is spinning up, please check your email in the next few minutes for connection credentials"
+    server = Server.find_by(internal_id: server_id)
 
+    if server.nil?
+      flash.notice = "There has been an issue creating your server."
+    else
+      flash.notice = "Thank you! Your server is spinning up, please check your email in the next few minutes for connection credentials"
+    end
+    
     redirect_to "/dashboard"
   end
 end
