@@ -35,24 +35,41 @@ class CheckoutController < ApplicationController
 
     server_id = stripe_session.metadata[:server_id]
 
+    server_name = "#{SERVER_ADJECTIVES.sample.capitalize}#{SERVER_NAMES.sample}"
+
     vultr_instance = Vultr::CreateInstanceService.new(
       user_id: session_user.id,
+      hostname: server_name,
       stripe_id: stripe_session.subscription,
-      server_id: server_id
+      server_id: server_id,
     ).execute
 
-    Server.create({
+    server = Server.new({
+      name: server_name,
       internal_id: server_id,
       user_id: session_user.id,
       provider_identifier: vultr_instance.id,
       provider_plan_identifier: vultr_instance.plan,
       provider_os_identifier: vultr_instance.os,
       provider_region_identifier: vultr_instance.region,
-      stripe_subscription_id: @stripe_id
+      stripe_subscription_id: stripe_session.subscription
     })
+    server.save!
 
+    Mail::SendService.new(
+      responsibility: "credentials",
+      to: session_user.email,
+      body: %Q(
+      Thank you for creating a server with getserver.app!
+      <br>
+      Server Credentials:
+      <br>
+      <b>Username:</b> root<br>
+      <b>Password:</b> #{vultr_instance.default_password}<br>
+      )
+    ).execute
+    session.delete(:stripe_checkout)
     flash.notice = "Thank you! Your server is spinning up, please check your email in the next few minutes for connection credentials"
-
     redirect_to "/dashboard"
   end
 end

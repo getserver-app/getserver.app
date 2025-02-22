@@ -1,12 +1,12 @@
 <form action="/dashboard/action">
     <div class="flex flex-row">
         <div class="dashboard-creation-wrapper">
-            <input type="submit" name="action" value="New">
+            <input type="submit" name="cmd" value="New">
         </div>
         <div class="dashboard-actions-wrapper">
-            <input type="submit" name="action" value="Restart">
-            <input type="submit" name="action" value="Stop">
-            <input type="submit" name="action" value="Delete">
+            <input type="submit" name="cmd" value="Restart">
+            <input type="submit" name="cmd" value="Stop">
+            <input type="submit" name="cmd" value="Delete">
         </div>
     </div>
     <table style="outline: 1px solid black">
@@ -15,21 +15,41 @@
                 <th></th>
                 <th>Server Name</th>
                 <th>Ip Address</th>
+                <th>Created</th>
+                <th>Deletion In</th>
             </tr>
         </thead>
         <tbody>
-            <% @servers.each do |server| %>
-                <tr>
-                    <td>
-                        <input type="radio" name="server" value="<%= server.id %>">
-                    </td>
-                    <td>
-                        <%= server.name %>
-                    </td>
-                    <td>
-                        <%= server.ip %>
-                    </td>
-                </tr>
+            <% if @servers.empty? or @servers.nil? %>
+                You have no servers.
+            <% else %>
+                <% @servers.each do |server| %>
+                    <tr>
+                        <td>
+                            <input type="radio" name="server" value="<%= server.id %>">
+                        </td>
+                        <td>
+                            <%= server.name %>
+                        </td>
+                        <td>
+                            <% if server.ip == "0.0.0.0" %>
+                                Allocating...
+                            <% else %>
+                                <%= server.ip %>
+                            <% end %>
+                        </td>
+                        <td>
+                            <%= time_ago_in_words(server.created_at) %> ago
+                        </td>
+                        <td>
+                            <% if server.server_deletion %>
+                                <%= distance_of_time_in_words(Time.now, server.server_deletion.delete_at) %>
+                            <% else %>
+                                Never
+                            <% end %>
+                        </td>
+                    </tr>
+                <% end %> 
             <% end %>
         </tbody>
     </table>

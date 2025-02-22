@@ -40,35 +40,30 @@ class CoreController < ApplicationController
     end
 
     session[:user_id] = @user.id
-    session[:verification_attempts] = verification_attempts
 
     if session_user_verified
       return redirect_to "/dashboard"
     end
 
-    @verification_email = Email.create(
+    @verification_email = Mail::SendService.new(
+      to: @email,
       responsibility: "verification",
-      email: @email,
-    )
+      # is the @user.verified necessary if we're sending the verification link?
+      body: %Q(
+Please click the following link to #{@user.verified ? "login to" : "rent a vps from"} getserver.app:
+<br>
+<a href="https://getserver.app/verify/#{@verification.path}">https://getserver.app/verify/#{@verification.path}</a>
+<br>
+Do not share this link with anybody.
+<br>
+      ).strip
+    ).execute
 
     @verification = Verification.create(
       path: SecureRandom.uuid,
       email_id: @verification_email.id,
       user_id: @user.id
     )
-
-    Mail::SendService.new(
-      to: @email,
-      responsibility: "verification",
-      # is the @user.verified necessary if we're sending the verification link?
-      body: %Q(
-Please click the following link to #{@user.verified ? "login to" : "rent a vps from"} getserver.app:
-
-<a href="https://getserver.app/verify/#{@verification.path}">https://getserver.app/verify/#{@verification.path}</a>
-
-Do not share this link with anybody.
-      ).strip
-    ).execute
 
     redirect_to "/"
   end

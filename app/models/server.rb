@@ -1,5 +1,6 @@
 class Server < ApplicationRecord
   belongs_to :user
+  has_one :server_deletion, dependent: :destroy
 
   validates :name, presence: true
   validates :internal_id, presence: true
@@ -10,17 +11,17 @@ class Server < ApplicationRecord
   validates :active, presence: true
   validates :stripe_subscription_id, presence: true
 
-  before_create do
-    self.name = generate_name
+  before_destroy do
+    Vultr::DeleteInstanceService.new(instance_id: self.provider_identifier).execute
   end
 
   def ip
-    self.vultr_instance.ip
+    self.vultr_instance.main_ip
   end
 
   def vultr_instance
     if @vultr_instance.nil?
-      return @vultr_instance = vultr_client.retrieve(instance_id: self.provider_identifier)
+      return @vultr_instance = vultr_client.instances.retrieve(instance_id: self.provider_identifier)
     end
     @vultr_instance
   end
@@ -32,9 +33,5 @@ class Server < ApplicationRecord
     @vultr_client
   end
 
-  def generate_name
-    "#{SERVER_ADJECTIVES.sample.capitalize}#{SERVER_NAMES.sample}"
-  end
-
-  private :generate_name, :vultr_client
+  private :vultr_client
 end
