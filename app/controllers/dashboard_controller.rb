@@ -9,8 +9,6 @@ class DashboardController < ApplicationController
   def action
     @action = params.required(:cmd)
 
-    p @action
-
     if @action == "New"
       session[:server_id] = SecureRandom.uuid
       return redirect_to "/checkout"
