@@ -28,6 +28,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_021340) do
 
   create_table "servers", force: :cascade do |t|
     t.integer "user_id"
+    t.string "name", null: false
     t.string "internal_id", null: false
     t.string "provider_identifier", null: false
     t.string "provider_plan_identifier", null: false
