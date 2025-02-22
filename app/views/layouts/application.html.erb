@@ -42,5 +42,9 @@
       <hr>
       <a href="/tos">tos</a> | <a href="/privacy">privacy</a> | <a href="/about">about</a>
     </footer>
+
+    <% if Rails.env.development? %>
+      <%= debug session.to_hash %>
+    <% end %>
   </body>
 </html>

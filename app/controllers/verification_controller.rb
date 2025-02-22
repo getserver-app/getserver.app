@@ -20,11 +20,12 @@ class VerificationController < ApplicationController
 
     Verification.where(user: @user).destroy_all
 
+    @user.update(verified: true)
+
     if @user.verified
       return redirect_to "/dashboard"
     end
 
-    @user.update(verified: true)
     redirect_to "/checkout"
   end
 end

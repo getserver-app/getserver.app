@@ -12,11 +12,7 @@ class Server < ApplicationRecord
   validates :stripe_subscription_id, presence: true
 
   before_destroy do
-    Vultr::DeleteInstanceService.new(instance_id: @server.provider_identifier).execute
-  end
-
-  before_create do
-    self.name = generate_name
+    Vultr::DeleteInstanceService.new(instance_id: self.provider_identifier).execute
   end
 
   def ip
@@ -37,9 +33,5 @@ class Server < ApplicationRecord
     @vultr_client
   end
 
-  def generate_name
-    "#{SERVER_ADJECTIVES.sample.capitalize}#{SERVER_NAMES.sample}"
-  end
-
-  private :generate_name, :vultr_client
+  private :vultr_client
 end

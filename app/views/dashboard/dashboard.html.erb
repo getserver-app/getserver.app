@@ -1,7 +1,7 @@
 <form action="/dashboard/action">
     <div class="flex flex-row">
         <div class="dashboard-creation-wrapper">
-            <input type="submit" name="action" value="New">
+            <input type="submit" name="cmd" value="New">
         </div>
         <div class="dashboard-actions-wrapper">
             <input type="submit" name="cmd" value="Restart">
@@ -15,11 +15,13 @@
                 <th></th>
                 <th>Server Name</th>
                 <th>Ip Address</th>
+                <th>Created</th>
+                <th>Deletion In</th>
             </tr>
         </thead>
         <tbody>
-            <% if @servers.nil? %>
-                <td>No servers.</td>
+            <% if @servers.empty? or @servers.nil? %>
+                You have no servers.
             <% else %>
                 <% @servers.each do |server| %>
                     <tr>
@@ -30,7 +32,21 @@
                             <%= server.name %>
                         </td>
                         <td>
-                            <%= server.ip %>
+                            <% if server.ip == "0.0.0.0" %>
+                                Allocating...
+                            <% else %>
+                                <%= server.ip %>
+                            <% end %>
+                        </td>
+                        <td>
+                            <%= time_ago_in_words(server.created_at) %> ago
+                        </td>
+                        <td>
+                            <% if server.server_deletion %>
+                                <%= distance_of_time_in_words(Time.now, server.server_deletion.delete_at) %>
+                            <% else %>
+                                Never
+                            <% end %>
                         </td>
                     </tr>
                 <% end %> 
