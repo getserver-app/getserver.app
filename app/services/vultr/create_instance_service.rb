@@ -5,14 +5,14 @@ module Vultr
       os_id = self.get_provider_os_id
       plan_id = self.get_provider_plan_id
 
-      vultr_client.instances.create({
+      vultr_client.instances.create(
         region: region_id,
         plan: plan_id,
         label: @stripe_id + "-" + @server_id,
         os_id: os_id,
         backups: "disabled",
         tags: [ "User #{@user_id}", "Server #{@server_id}", "Stripe #{@stripe_id}" ]
-      })
+      )
     end
 
     # Gets the latest Debian image from Vultr.
