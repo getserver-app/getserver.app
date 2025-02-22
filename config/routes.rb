@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get "/enter", to: "core#enter"
 
   get "/dashboard", to: "dashboard#dashboard"
+  get "/dashboard/action", to: "dashboard#action"
 
   # Defines the root path route ("/")
   root "core#index"

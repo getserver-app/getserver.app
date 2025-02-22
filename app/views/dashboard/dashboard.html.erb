@@ -4,9 +4,9 @@
             <input type="submit" name="action" value="New">
         </div>
         <div class="dashboard-actions-wrapper">
-            <input type="submit" name="action" value="Restart">
-            <input type="submit" name="action" value="Stop">
-            <input type="submit" name="action" value="Delete">
+            <input type="submit" name="cmd" value="Restart">
+            <input type="submit" name="cmd" value="Stop">
+            <input type="submit" name="cmd" value="Delete">
         </div>
     </div>
     <table style="outline: 1px solid black">
@@ -18,18 +18,22 @@
             </tr>
         </thead>
         <tbody>
-            <% @servers.each do |server| %>
-                <tr>
-                    <td>
-                        <input type="radio" name="server" value="<%= server.id %>">
-                    </td>
-                    <td>
-                        <%= server.name %>
-                    </td>
-                    <td>
-                        <%= server.ip %>
-                    </td>
-                </tr>
+            <% if @servers.nil? %>
+                <td>No servers.</td>
+            <% else %>
+                <% @servers.each do |server| %>
+                    <tr>
+                        <td>
+                            <input type="radio" name="server" value="<%= server.id %>">
+                        </td>
+                        <td>
+                            <%= server.name %>
+                        </td>
+                        <td>
+                            <%= server.ip %>
+                        </td>
+                    </tr>
+                <% end %> 
             <% end %>
         </tbody>
     </table>
