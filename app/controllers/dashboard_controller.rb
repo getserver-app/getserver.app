@@ -4,5 +4,6 @@ class DashboardController < ApplicationController
   def dashboard
     @user = session_user
     @servers = @user.servers
+
   end
 end

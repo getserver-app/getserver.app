@@ -1,5 +1,15 @@
 class Server < ApplicationRecord
   belongs_to :user
+
+  validates :name, presence: true
+  validates :internal_id, presence: true
+  validates :provider_identifier, presence: true
+  validates :provider_plan_identifier, presence: true
+  validates :provider_os_identifier, presence: true
+  validates :provider_region_identifier, presence: true
+  validates :active, presence: true
+  validates :stripe_subscription_id, presence: true
+
   before_create do
     self.name = generate_name
   end
