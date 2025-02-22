@@ -5,7 +5,7 @@ module Mail
         from: VERIFICATION_EMAIL_FROM,
         to: @to,
         subject: "Please verify your email",
-        text: @body
+        html: @body
       }
       mg_client.send_message(EMAIL_DOMAIN, messages_params)
     end

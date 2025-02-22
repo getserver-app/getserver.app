@@ -2,6 +2,7 @@ class CreateServers < ActiveRecord::Migration[8.0]
   def change
     create_table :servers do |t|
       t.references :user
+      t.string :name, null: false
       t.string :internal_id, null: false
       t.string :provider_identifier, null: false
       t.string :provider_plan_identifier, null: false

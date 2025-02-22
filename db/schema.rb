@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_16_193733) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_20_021340) do
   create_table "emails", force: :cascade do |t|
     t.string "email", limit: 320, null: false
     t.string "responsibility", limit: 100, null: false
@@ -28,6 +28,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_16_193733) do
 
   create_table "servers", force: :cascade do |t|
     t.integer "user_id"
+    t.string "name", null: false
     t.string "internal_id", null: false
     t.string "provider_identifier", null: false
     t.string "provider_plan_identifier", null: false
@@ -44,7 +45,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_16_193733) do
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "stripe_id", limit: 50, null: false
+    t.boolean "verified", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "verifications", force: :cascade do |t|
+    t.string "path", null: false
+    t.integer "email_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_id"], name: "index_verifications_on_email_id"
+    t.index ["user_id"], name: "index_verifications_on_user_id"
   end
 end

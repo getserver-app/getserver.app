@@ -12,6 +12,10 @@ class CoreController < ApplicationController
   def enter
     @email = params["email"]
 
+    if @email.nil?
+      return redirect_to "/"
+    end
+
     verification_attempts = Email.where(
       responsibility: "verification",
       email: @email, created_at: Time.parse("12am")..Time.parse("11:59pm")
@@ -25,24 +29,42 @@ class CoreController < ApplicationController
 
     if @user.nil?
       customer = Stripe::Customer.create(email: @email)
-      @user = User.create(email: @email, stripe_id: customer.id)
+      @user = User.new(email: @email, stripe_id: customer.id, verified: false)
+      @user.save
       flash.notice = "Thanks for signing up. Check your email in the next few minutes to get your VPS."
     else
       flash.notice = "Check your email in the next few minutes to finish logging in."
     end
 
+    if @user.verified
+      return redirect_to "/dashboard"
+    end
+
     session[:user_id] = @user.id
     session[:verification_attempts] = verification_attempts
 
-    Email.create(
+    @verification_email = Email.create(
       responsibility: "verification",
       email: @email,
+    )
+
+    @verification = Verification.create(
+      path: SecureRandom.uuid,
+      email_id: @verification_email.id,
+      user_id: @user.id
     )
 
     Mail::SendService.new(
       to: @email,
       responsibility: "verification",
-      body: "Imagine you see a verification link!"
+      # is the @user.verified necessary if we're sending the verification link? 
+      body: %Q(
+Please click the following link to #{@user.verified ? "login to" : "rent a vps from"} getserver.app:
+
+<a href="https://getserver.app/verify/#{@verification.path}">https://getserver.app/verify/#{@verification.path}</a>
+
+Do not share this link with anybody.
+      ).gsub(/\s+/, " ").strip
     ).execute
 
     redirect_to "/"

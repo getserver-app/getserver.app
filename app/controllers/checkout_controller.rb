@@ -1,9 +1,7 @@
 class CheckoutController < ApplicationController
-  def checkout
-    if session_user.nil?
-      redirect_to "/"
-    end
+  before_action :require_valid_user
 
+  def checkout
     stripe_session = Stripe::Checkout::Session.create(
       customer: session_user.stripe_id,
       payment_method_types: [ "card" ],
@@ -20,7 +18,7 @@ class CheckoutController < ApplicationController
   end
 
   def cancel
-    session.delete(:stripe_session)
+    session.clear
     redirect_to "/"
   end
 

@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :servers
-
+  has_many :verifications
   validates :email, format: { with: EMAIL_REGEXP, on: :create }
 
   before_destroy :schedule_server_deletion
