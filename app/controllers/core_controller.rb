@@ -7,6 +7,9 @@ class CoreController < ApplicationController
     only: :enter
 
   def index
+    if session_user_verified
+      redirect_to "/dashboard"
+    end
   end
 
   def enter
@@ -21,7 +24,7 @@ class CoreController < ApplicationController
       email: @email, created_at: Time.parse("12am")..Time.parse("11:59pm")
     ).count
     if verification_attempts > 5
-      flash.alert = "Rate limited."
+      flash.alert = "Rate limited. Try again later."
       return redirect_to "/"
     end
 
@@ -36,12 +39,12 @@ class CoreController < ApplicationController
       flash.notice = "Check your email in the next few minutes to finish logging in."
     end
 
+    session[:user_id] = @user.id
+    session[:verification_attempts] = verification_attempts
+
     if @user.verified
       return redirect_to "/dashboard"
     end
-
-    session[:user_id] = @user.id
-    session[:verification_attempts] = verification_attempts
 
     @verification_email = Email.create(
       responsibility: "verification",
@@ -57,14 +60,14 @@ class CoreController < ApplicationController
     Mail::SendService.new(
       to: @email,
       responsibility: "verification",
-      # is the @user.verified necessary if we're sending the verification link? 
+      # is the @user.verified necessary if we're sending the verification link?
       body: %Q(
 Please click the following link to #{@user.verified ? "login to" : "rent a vps from"} getserver.app:
 
 <a href="https://getserver.app/verify/#{@verification.path}">https://getserver.app/verify/#{@verification.path}</a>
 
 Do not share this link with anybody.
-      ).gsub(/\s+/, " ").strip
+      ).strip
     ).execute
 
     redirect_to "/"

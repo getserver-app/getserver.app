@@ -1,5 +1,5 @@
 class Verification < ApplicationRecord
-    has_one :email
-    has_one :user
+    belongs_to :email
+    belongs_to :user
     validates :path, presence: true
 end

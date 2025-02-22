@@ -16,8 +16,12 @@ module UserHelper
       return false
     end
 
+    if session[:verified_at].nil?
+      return false
+    end
+
     # 8 Hour verified sessions for now
-    if session[:verified_at] - DateTime.now.strftime("%Q") >= 3_600_000
+    if Integer(DateTime.now.strftime("%Q")) - Integer(session[:verified_at]) < 3_600_000
       return true
     end
 

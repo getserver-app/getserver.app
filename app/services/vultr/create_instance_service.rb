@@ -1,9 +1,9 @@
 module Vultr
   class CreateInstanceService < Vultr::BaseService
     def execute
-      region_id = get_provider_region_id
-      os_id = get_provier_os_id
-      plan_id = get_provider_plan_id
+      region_id = self.get_provider_region_id
+      os_id = self.get_provider_os_id
+      plan_id = self.get_provider_plan_id
 
       vultr_client.instances.create({
         region: region_id,

@@ -8,7 +8,7 @@ class ApiController < ApplicationController
 
     @user = User.find_by(email: params[:email])
 
-    if @user.nil?
+    if @user.nil? or !@user.verified
       render json: { button_txt: "Rent a VPS" }, status: :not_found
       return
     end

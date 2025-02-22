@@ -1,8 +1,15 @@
 <form action="/dashboard/action">
-    <input type="submit" name="action" value="Restart">
-    <input type="submit" name="action" value="Stop">
-    <input type="submit" name="action" value="Delete">
-    <table>
+    <div class="flex flex-row">
+        <div class="dashboard-creation-wrapper">
+            <input type="submit" name="action" value="New">
+        </div>
+        <div class="dashboard-actions-wrapper">
+            <input type="submit" name="action" value="Restart">
+            <input type="submit" name="action" value="Stop">
+            <input type="submit" name="action" value="Delete">
+        </div>
+    </div>
+    <table style="outline: 1px solid black">
         <thead>
             <tr>
                 <th></th>

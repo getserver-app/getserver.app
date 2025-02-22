@@ -1,19 +1,30 @@
 class VerificationController < ApplicationController
-    def verify
-        @verification = Verification.find_by(path: params["path"])
-        @user = session_user
+  def verify
+    @verification = Verification.find_by(path: params["path"])
+    @user = session_user
 
-        if @verification.nil? or @user.nil?
-            return redirect_to "/"
-        end
-
-        session[:verified_at] = DateTime.now.strftime("%Q")
-
-        if @user.verified
-            return redirect_to "/dashboard"
-        end
-
-        User.update(@user.id, {verified: true})
-        redirect_to "/dashboard"
+    if @verification.nil? or @verification.created_at <= 1.hours.ago
+      return render "invalid", status: 400
     end
+
+    if @user.nil?
+      return redirect_to "/"
+    end
+
+    if @verification.user.id != @user.id
+      return redirect_to "/"
+    end
+
+
+    session[:verified_at] = DateTime.now.strftime("%Q")
+
+    Verification.where(user: @user).destroy_all
+
+    if @user.verified
+      return redirect_to "/dashboard"
+    end
+
+    @user.update(verified: true)
+    redirect_to "/checkout"
+  end
 end

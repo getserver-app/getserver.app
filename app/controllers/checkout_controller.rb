@@ -1,11 +1,11 @@
 class CheckoutController < ApplicationController
-  before_action :require_valid_user
+  before_action :require_verified_login_session
 
   def checkout
     stripe_session = Stripe::Checkout::Session.create(
       customer: session_user.stripe_id,
       payment_method_types: [ "card" ],
-      line_items: [ { price: stripe_product.default_price.id, quantity: 1 } ],
+      line_items: [ { price: stripe_product.default_price, quantity: 1 } ],
       mode: "subscription",
       success_url: stripe_checkout_success_url,
       cancel_url: stripe_checkout_cancel_url,
@@ -35,9 +35,9 @@ class CheckoutController < ApplicationController
 
     server_id = stripe_session.metadata[:server_id]
 
-    vultr_instance = Vultr::CreateInstance.new(
+    vultr_instance = Vultr::CreateInstanceService.new(
       user_id: session_user.id,
-      stripe_id: stripe_session.subscription.id,
+      stripe_id: stripe_session.subscription,
       server_id: server_id
     ).execute
 
