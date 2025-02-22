@@ -2,6 +2,7 @@ class VerificationController < ApplicationController
     def verify
         @verification = Verification.find_by(path: params["path"])
         @user = session_user
+
         if @verification.nil? or @user.nil?
             return redirect_to "/"
         end
@@ -12,6 +13,7 @@ class VerificationController < ApplicationController
             return redirect_to "/dashboard"
         end
 
-        User.find_by_id(session[:user_id]).update(verified: true)
+        User.update(@user.id, {verified: true})
+        redirect_to "/dashboard"
     end
 end

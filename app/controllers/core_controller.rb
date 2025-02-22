@@ -36,6 +36,10 @@ class CoreController < ApplicationController
       flash.notice = "Check your email in the next few minutes to finish logging in."
     end
 
+    if @user.verified
+      return redirect_to "/dashboard"
+    end
+
     session[:user_id] = @user.id
     session[:verification_attempts] = verification_attempts
 
@@ -53,6 +57,7 @@ class CoreController < ApplicationController
     Mail::SendService.new(
       to: @email,
       responsibility: "verification",
+      # is the @user.verified necessary if we're sending the verification link? 
       body: %Q(
 Please click the following link to #{@user.verified ? "login to" : "rent a vps from"} getserver.app:
 
