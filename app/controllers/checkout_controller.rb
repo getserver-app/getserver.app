@@ -41,24 +41,24 @@ class CheckoutController < ApplicationController
       server_id: server_id
     ).execute
 
-    Server.create({
+    server = Server.new({
+      name: "",
       internal_id: server_id,
       user_id: session_user.id,
       provider_identifier: vultr_instance.id,
       provider_plan_identifier: vultr_instance.plan,
       provider_os_identifier: vultr_instance.os,
       provider_region_identifier: vultr_instance.region,
-      stripe_subscription_id: @stripe_id
+      stripe_subscription_id: stripe_session.subscription
     })
-
-    server = Server.find_by(internal_id: server_id)
+    server.save!
 
     if server.nil?
       flash.notice = "There has been an issue creating your server."
     else
       flash.notice = "Thank you! Your server is spinning up, please check your email in the next few minutes for connection credentials"
     end
-    
+
     redirect_to "/dashboard"
   end
 end

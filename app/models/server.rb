@@ -15,12 +15,12 @@ class Server < ApplicationRecord
   end
 
   def ip
-    self.vultr_instance.ip
+    self.vultr_instance.main_ip
   end
 
   def vultr_instance
     if @vultr_instance.nil?
-      return @vultr_instance = vultr_client.retrieve(instance_id: self.provider_identifier)
+      return @vultr_instance = vultr_client.instances.retrieve(instance_id: self.provider_identifier)
     end
     @vultr_instance
   end
