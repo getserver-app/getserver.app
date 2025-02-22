@@ -40,7 +40,6 @@ class CoreController < ApplicationController
     end
 
     session[:user_id] = @user.id
-    session[:verification_attempts] = verification_attempts
 
     if session_user_verified
       return redirect_to "/dashboard"

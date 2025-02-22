@@ -20,10 +20,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_021340) do
   end
 
   create_table "server_deletions", force: :cascade do |t|
-    t.string "server_id", null: false
+    t.integer "server_id"
     t.datetime "delete_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["server_id"], name: "index_server_deletions_on_server_id"
   end
 
   create_table "servers", force: :cascade do |t|

@@ -1,5 +1,6 @@
 class Server < ApplicationRecord
   belongs_to :user
+  has_one :server_deletion, dependent: :destroy
 
   validates :name, presence: true
   validates :internal_id, presence: true
@@ -9,6 +10,10 @@ class Server < ApplicationRecord
   validates :provider_region_identifier, presence: true
   validates :active, presence: true
   validates :stripe_subscription_id, presence: true
+
+  before_destroy do
+    Vultr::DeleteInstanceService.new(instance_id: @server.provider_identifier).execute
+  end
 
   before_create do
     self.name = generate_name

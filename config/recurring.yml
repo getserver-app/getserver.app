@@ -1,0 +1,5 @@
+production:
+  delete_servers:
+    class: ServerCleanupJob
+    args: []
+    schedule: '5 * * * *'
