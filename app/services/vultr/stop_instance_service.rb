@@ -1,5 +1,5 @@
 module Vultr
-  class StopInstanceService
+  class StopInstanceService < Vultr::BaseService
     def execute
       vultr_client.instances.halt(instance_id: @instance_id)
     end

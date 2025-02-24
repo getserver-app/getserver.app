@@ -6,7 +6,5 @@ module Vultr
       end
       @vultr_client
     end
-
-    protected :vultr_client
   end
 end

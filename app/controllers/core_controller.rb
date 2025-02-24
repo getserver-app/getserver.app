@@ -45,14 +45,15 @@ class CoreController < ApplicationController
       return redirect_to "/dashboard"
     end
 
+    verification_path = SecureRandom.uuid
+
     @verification_email = Mail::SendService.new(
       to: @email,
       responsibility: "verification",
-      # is the @user.verified necessary if we're sending the verification link?
       body: %Q(
 Please click the following link to #{@user.verified ? "login to" : "rent a vps from"} getserver.app:
 <br>
-<a href="https://getserver.app/verify/#{@verification.path}">https://getserver.app/verify/#{@verification.path}</a>
+<a href="https://getserver.app/verify/#{verification_path}">https://getserver.app/verify/#{verification_path}</a>
 <br>
 Do not share this link with anybody.
 <br>
@@ -60,7 +61,7 @@ Do not share this link with anybody.
     ).execute
 
     @verification = Verification.create(
-      path: SecureRandom.uuid,
+      path: verification_path,
       email_id: @verification_email.id,
       user_id: @user.id
     )
