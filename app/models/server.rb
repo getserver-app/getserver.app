@@ -15,6 +15,10 @@ class Server < ApplicationRecord
     Vultr::DeleteInstanceService.new(instance_id: self.provider_identifier).execute
   end
 
+  def status
+    self.vultr_instance.status
+  end
+
   def ip
     self.vultr_instance.main_ip
   end

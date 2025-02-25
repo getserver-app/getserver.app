@@ -1,28 +1,36 @@
-<form action="/dashboard/action">
-    <div class="flex flex-row">
+<div class="flex flex-row">
+    <form action="/dashboard/action?cmd=New">
         <div class="dashboard-creation-wrapper">
-            <input type="submit" name="cmd" value="New">
+            <input type="hidden" value="New" name="cmd">
+            <button type="submit">
+                New Server
+            </button>
         </div>
+    </form>
+</div>
+<% if @servers.empty? or @servers.nil? %>
+    <p>
+        You have no servers.
+    </p>
+<% else %>
+    <form action="/dashboard/action">
         <div class="dashboard-actions-wrapper">
             <input type="submit" name="cmd" value="Restart">
             <input type="submit" name="cmd" value="Stop">
             <input type="submit" name="cmd" value="Delete">
         </div>
-    </div>
-    <table style="outline: 1px solid black">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Server Name</th>
-                <th>Ip Address</th>
-                <th>Created</th>
-                <th>Deletion In</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if @servers.empty? or @servers.nil? %>
-                You have no servers.
-            <% else %>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Server Name</th>
+                    <th>Ip Address</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Deletion In</th>
+                </tr>
+            </thead>
+            <tbody>
                 <% @servers.each do |server| %>
                     <tr>
                         <td>
@@ -39,6 +47,9 @@
                             <% end %>
                         </td>
                         <td>
+                            server.status
+                        </td>
+                        <td>
                             <%= time_ago_in_words(server.created_at) %> ago
                         </td>
                         <td>
@@ -49,8 +60,8 @@
                             <% end %>
                         </td>
                     </tr>
-                <% end %> 
-            <% end %>
-        </tbody>
-    </table>
-</form>
+                <% end %>
+            </tbody>
+        </table>
+    </form>
+<% end %>

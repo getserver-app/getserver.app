@@ -19,12 +19,13 @@ class CoreController < ApplicationController
       return redirect_to "/"
     end
 
-    verification_attempts = Email.where(
+    latest_verification_attempt = Email.where(
       responsibility: "verification",
-      email: @email, created_at: Time.parse("12am")..Time.parse("11:59pm")
-    ).count
-    if verification_attempts > 5
-      flash.alert = "Rate limited. Try again later."
+      email: @email
+    ).order(created_at: :desc).first
+
+    if latest_verification_attempt.created_at > 5.minutes.ago
+      flash.alert = "Please allow at least 5 minutes to pass before you try to verify again."
       return redirect_to "/"
     end
 
@@ -34,9 +35,6 @@ class CoreController < ApplicationController
       customer = Stripe::Customer.create(email: @email)
       @user = User.new(email: @email, stripe_id: customer.id, verified: false)
       @user.save
-      flash.notice = "Thanks for signing up. Check your email in the next few minutes to get your VPS."
-    else
-      flash.notice = "Check your email in the next few minutes to finish logging in."
     end
 
     session[:user_id] = @user.id
