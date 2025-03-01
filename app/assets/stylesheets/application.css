@@ -9,6 +9,22 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+.flash {
+    border: 3px solid;
+}
+
+.flash > p {
+    margin: 6px;
+}
+
+.flash-alert {
+    border-color: coral;
+}
+
+.flash-notice {
+    border-color: lightskyblue;
+}
+
 #enter-button {
     margin-top: 12px;
 }

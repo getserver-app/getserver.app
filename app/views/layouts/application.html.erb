@@ -28,17 +28,19 @@
           <img src="/banner.png">
         </a>
       </div>
-      <div class="flash-wrapper">
-        <% flash.each do |type, msg| %>
-          <div class="alert-<%= type %>">
-            <%= msg %>
-          </div>
-        <% end %>
-      </div>
       <hr>
     </header> 
     <article>
       <main>
+        <div class="flash-wrapper">
+          <% flash.each do |type, msg| %>
+            <div class="flash flash-<%= type %>">
+              <p>
+                <%= msg %>
+              </p>
+            </div>
+          <% end %>
+        </div>
         <%= yield %>
       </main>
     </article>
