@@ -19,7 +19,7 @@
             <input type="submit" name="cmd" value="Stop">
             <input type="submit" name="cmd" value="Delete">
         </div>
-        <table>
+        <table class="servers">
             <thead>
                 <tr>
                     <th></th>
@@ -47,7 +47,7 @@
                             <% end %>
                         </td>
                         <td>
-                            server.status
+                            <%= server.status %>
                         </td>
                         <td>
                             <%= time_ago_in_words(server.created_at) %> ago

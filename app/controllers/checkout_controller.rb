@@ -64,8 +64,11 @@ class CheckoutController < ApplicationController
       <br>
       Server Credentials:
       <br>
-      <b>Username:</b> root<br>
+      <b>Username:</b> #{vultr_instance.user_scheme}<br>
       <b>Password:</b> #{vultr_instance.default_password}<br>
+      <br>
+      To login, use <pre><code>ssh #{vultr_instance.user_scheme}@[YOUR SERVERS IP]</code></pre>, you can find your servers IP by going to your dashboard.
+      <br>
       )
     ).execute
     session.delete(:stripe_checkout)

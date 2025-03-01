@@ -56,6 +56,10 @@ td {
     border-collapse: collapse;
 }
 
+servers td {
+    padding: 3px;
+}
+
 /* On desktop */
 @media (min-width: 55em) {
     aside {
