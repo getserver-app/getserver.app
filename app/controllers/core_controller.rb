@@ -24,7 +24,8 @@ class CoreController < ApplicationController
       email: @email
     ).order(created_at: :desc).first
 
-    if latest_verification_attempt.created_at > 5.minutes.ago
+    if !latest_verification_attempt.nil? &&
+        latest_verification_attempt.created_at > 5.minutes.ago
       flash.alert = "Please allow at least 5 minutes to pass before you try to verify again."
       return redirect_to "/"
     end
