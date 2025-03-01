@@ -1,24 +1,7 @@
-# README
+# getserver dot app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+get servers, and nothing else.
 
-Things you may want to cover:
+## LICENSE
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This project is licensed under the AGPLv3, please read the `LICENSE` file for more information on what that means.
