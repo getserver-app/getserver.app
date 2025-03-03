@@ -35,6 +35,11 @@ main {
 
 footer {
     text-align: center;
+    font-size: 11px;
+}
+
+footer .links {
+    font-size: calc(12px + 0.11vw);
 }
 
 header>hr,
